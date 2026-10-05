@@ -3,32 +3,60 @@
 :root{
   --bg:#f5f7f4; --surface:#ffffff; --surface-2:#fbfcfa; --text:#161a16; --muted:#5d6a5e;
   --accent:#1f7a43; --accent-ink:#0f5c30; --border:#e1e7df; --ring:#1f7a4333; --chip:#e8f3ea;
+  --header-bg:#ffffff;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   color-scheme:dark;
   --bg:#10140f; --surface:#191e18; --surface-2:#141811; --text:#e9eee8; --muted:#9bab9c;
   --accent:#44c97a; --accent-ink:#8ee3ad; --border:#2a322a; --ring:#44c97a33; --chip:#1c2a1f;
+  --header-bg:#141811;
 }}
 :root[data-theme="dark"]{
   color-scheme:dark;
   --bg:#10140f; --surface:#191e18; --surface-2:#141811; --text:#e9eee8; --muted:#9bab9c;
   --accent:#44c97a; --accent-ink:#8ee3ad; --border:#2a322a; --ring:#44c97a33; --chip:#1c2a1f;
+  --header-bg:#141811;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--text);
   font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;line-height:1.5;
   -webkit-font-smoothing:antialiased;}
-.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:40px 64px;}
+a{color:inherit;}
+
+/* ---- top bar ---- */
+.topbar{background:var(--header-bg);border-bottom:1px solid var(--border);}
+.topbar-inner{max-width:1080px;margin:0 auto;padding-inline:20px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand img{height:28px;width:auto;display:block;}
+.brand-name{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:700;
+  font-size:17px;letter-spacing:-.01em;color:var(--text);}
+.topbar-tag{font-size:12.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;}
+@media (max-width:560px){.topbar-tag{display:none;}}
+
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:36px 64px;}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
   letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);
   background:var(--chip);border:1px solid var(--border);padding:6px 12px;border-radius:999px;}
 .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
   box-shadow:0 0 0 3px var(--ring);}
 h1{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:700;
-  font-size:clamp(34px,6vw,52px);line-height:1.02;letter-spacing:-.02em;margin:18px 0 10px;
+  font-size:clamp(32px,5.5vw,48px);line-height:1.04;letter-spacing:-.02em;margin:16px 0 10px;
   text-wrap:balance;}
-.lede{color:var(--muted);font-size:16px;max-width:60ch;margin:0;}
+.lede{color:var(--muted);font-size:16px;max-width:62ch;margin:0;}
 .lede b{color:var(--text);font-variant-numeric:tabular-nums;}
+
+/* ---- stat strip ---- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0 8px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:16px 18px;}
+.stat .num{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:700;
+  font-size:clamp(22px,4vw,28px);letter-spacing:-.01em;font-variant-numeric:tabular-nums;
+  color:var(--text);line-height:1.1;}
+.stat .label{font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:.01em;}
+@media (max-width:560px){.stats{grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .stat{padding:12px 10px;border-radius:10px;}}
+
 .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:28px 0 22px;}
 .search{flex:1;min-width:220px;position:relative;}
 .search input{width:100%;font:inherit;font-size:15px;color:var(--text);background:var(--surface);
@@ -63,16 +91,33 @@ h1{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:700;
 .cats button:hover{border-color:var(--accent);color:var(--text);}
 .cats button.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);
-  font-size:13px;line-height:1.6;}
-@media (max-width:420px){.wrap{padding-block:28px 48px;}h1{font-size:32px;}}
+  font-size:13px;line-height:1.6;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+footer img{height:16px;width:auto;opacity:.75;}
+@media (max-width:420px){.wrap{padding-block:28px 48px;}h1{font-size:30px;}}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">
+      <img src="data:image/png;base64,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" alt="Appy Pie logo" width="315" height="160">
+      <span class="brand-name">Appy Pie</span>
+    </span>
+    <span class="topbar-tag">App Rebuild Automation</span>
+  </div>
+</div>
 
 <div class="wrap">
   <span class="eyebrow"><span class="dot"></span>Google Play &middot; Live</span>
   <h1>Published app portfolio</h1>
   <p class="lede"><b id="n">316</b> apps rebuilt with the Appy Pie automation agent and confirmed live on the Google&nbsp;Play Store. Tap any card to open its listing.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="num" id="statLive">316</div><div class="label">Live on Google Play</div></div>
+    <div class="stat"><div class="num" id="statCats">0</div><div class="label">Categories</div></div>
+    <div class="stat"><div class="num">October 5, 2026</div><div class="label">Last updated</div></div>
+  </div>
 
   <div class="controls">
     <label class="search">
@@ -88,7 +133,8 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);color
   <p class="empty" id="empty" hidden>No apps match that search.</p>
 
   <footer>
-    Updated October 5, 2026. Each app's live status and category are read from its own Google&nbsp;Play listing, refreshed automatically on every rebuild.
+    <img src="data:image/png;base64,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" alt="Appy Pie">
+    <span>Updated October 5, 2026. Each app's live status and category are read from its own Google&nbsp;Play listing, refreshed automatically on every rebuild.</span>
   </footer>
 </div>
 
@@ -99,7 +145,9 @@ const grid=document.getElementById('grid'),q=document.getElementById('q'),
 const arrow='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>';
 function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 let activeCat='All';
-const cats=['All',...new Set(APPS.map(a=>a.cat).filter(Boolean))].sort((a,b)=>a==='All'?-1:b==='All'?1:a.localeCompare(b));
+const uniqCats=[...new Set(APPS.map(a=>a.cat).filter(Boolean))];
+document.getElementById('statCats').textContent=uniqCats.length;
+const cats=['All',...uniqCats].sort((a,b)=>a==='All'?-1:b==='All'?1:a.localeCompare(b));
 catsEl.innerHTML=cats.map(c=>'<button type="button" data-cat="'+esc(c)+'" class="'+(c===activeCat?'active':'')+'">'+esc(c)+'</button>').join('');
 catsEl.addEventListener('click',function(e){
   const b=e.target.closest('button'); if(!b) return;
